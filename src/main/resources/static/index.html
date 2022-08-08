@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste index</title>
+    <style>
+        body{
+            background-color: darkslategray;
+            color: white;
+            height: 100%;
+            width: 100%;
+        }
+        div{
+            margin: auto;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>
+            pagina teste so para testar
+        </h1>
+    </div>
+
+    <div>
+        <ul id="usuarios">
+            
+        </ul>
+
+        <input type="text" id="nomePessoa">
+        <button onclick="botao()">enviar backend</button>
+
+    </div>
+
+</body>
+
+<script>
+    console.log("teste");
+    fetch('http://localhost:8080/usuarios')
+    .then(async function(response) {
+        console.log("1")
+        usuarios = await response.json()
+        console.log(usuarios);
+        
+        var ul = document.getElementById("usuarios");
+        usuarios.forEach((usuario, indice) => {
+            var li = document.createElement("li");
+            li.appendChild(document.createTextNode(usuario.login));
+            ul.appendChild(li);
+        });
+    });
+    console.log("2")
+
+    function botao(){
+        var textoBota = document.getElementById("nomePessoa").value;
+        console.log(textoBota)
+        const options = {
+            method: 'POST'
+        }
+        fetch('http://localhost:8080/recebenome/'+textoBota, options)
+        .then(response => {
+            console.log(response);
+        })
+    }
+
+</script>
+
+</html>
